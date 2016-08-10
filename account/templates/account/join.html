@@ -1,0 +1,8 @@
+{% extends 'firstpage.html' %}
+{% block body %}
+    <form id="signup-form" action="" method="post" novalidate autocomplete="on">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit">
+    </form>
+{% endblock %}

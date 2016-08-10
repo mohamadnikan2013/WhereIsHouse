@@ -1,0 +1,70 @@
+{% extends "firstpage.html" %}
+{% load staticfiles %}
+{% block fake %}
+    {#    <script type="text/javascript" src="{% static 'House/js/my_js1.js' %}"></script>#}
+    <script type="text/javascript" src="{% static 'House/js/details.js' %}"></script>
+{% endblock %}
+{% block body %}
+    <div id="first" class="ui divided items">
+        <div class="item">
+            <div class="image">
+                <img src="/media/{{ object.image }}">
+            </div>
+            <div class="content">
+                <a class="header">{{ object.title }}</a>
+                {#            <div class="meta">#}
+                {#                <span class="cinema">{{ object.price1}}</span>#}
+                {#            </div>#}
+                <div class="description middle panel" style="width: 50%">
+                    <p>{{ object.description }}</p>
+                </div>
+                <div class="extra">
+                    <div class="ui label"><i class="time icon"></i>Time:&nbsp;&nbsp;&nbsp;{{ object.time }}</div>
+                    <div class="ui label"><i class="dollar icon"></i>Price=&nbsp;&nbsp;&nbsp; {{ object.price1 }}</div>
+                    <div class="ui label"><i class="like icon"></i>Likes:&nbsp;&nbsp;&nbsp;{{ object.like }}</div>
+                    <div class="ui label"><i
+                            class="comment icon"></i>Comment:&nbsp;&nbsp;&nbsp;{{ object.comment.count }}
+                    </div>
+                    <div class="ui left floated primary button">
+                        <a id="like_house"> Like</a>
+                        <i class="right like icon"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="comments" class="ui comments">
+    </div>
+    <div id="my_form" class=" ui comments">
+        <div id="form1" class="ui form">
+            <div class="field">
+                <input id="comment_text" type="text">
+            </div>
+            <div class="myresults"></div>
+            <button id="comment_button" class="ui primary submit labeled icon button">Add Comment</button>
+        </div>
+        <div class="ui middle comments">
+            <div id="form2" class="ui form">
+                <div class="field">
+                    <input id="reply_text" type="text">
+                </div>
+                <div class="myresults"></div>
+                <button id="reply_button" class="ui primary submit labeled icon button">Reply</button>
+            </div>
+        </div>
+    </div>
+    <div id="House_token" style="visibility: hidden">
+        {{ home.token }}
+    </div>
+    <div id="house_pk" style="visibility: hidden">
+        {{ home.pk }}
+    </div>
+    <div id="comment_pk" style="visibility: hidden">
+
+    </div>
+    {% csrf_token %}
+
+{% endblock %}
+
+
+

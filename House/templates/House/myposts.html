@@ -1,0 +1,33 @@
+{% extends "firstpage.html" %}
+{% block body %}
+    {% for house in object_list %}
+        <div class="ui card">
+            <div class="image">
+                <img src="../media/{{ house.image }}">
+            </div>
+            <div class="content">
+                <a class="header">{{ house.title }}</a>
+                <div class="meta">
+                    <span class="date">{{ house.time }}</span>
+                </div>
+                <div class="description">
+                    {{ house.description }}
+                </div>
+            </div>
+            <div class="extra content">
+                <a href="{% url 'house:edit-my-post' token=house.token  %}">
+                    <i class="user icon"></i>
+                    Edit
+                </a>
+            </div>
+            <div class="extra content">
+                <a href="{% url 'house:delete-my-post' token=house.token  %}">
+                    <i class="user icon"></i>
+                    Delete
+                </a>
+            </div>
+        </div>
+    {% empty %}
+        No House yet.
+    {% endfor %}
+{% endblock %}

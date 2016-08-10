@@ -1,0 +1,103 @@
+{% extends "firstpage.html" %}
+{% load staticfiles %}
+{% block fake %}
+    <script type="text/javascript" src="{% static 'House/js/my_js1.js' %}"></script>
+{% endblock %}
+{% block body %}
+    <div id="first" class="ui divided items">
+        <div class="item">
+            <div class="image">
+                <img src="/media/{{ object.image }}">
+            </div>
+            <div class="content">
+                <a class="header">{{ object.title }}</a>
+                {#            <div class="meta">#}
+                {#                <span class="cinema">{{ object.price1}}</span>#}
+                {#            </div>#}
+                <div class="description middle panel" style="width: 50%">
+                    <p>{{ object.description }}</p>
+                </div>
+                <div class="extra">
+                    <div class="ui label"><i class="time icon"></i>Time:&nbsp;&nbsp;&nbsp;{{ object.time }}</div>
+                    <div class="ui label"><i class="dollar icon"></i>Price=&nbsp;&nbsp;&nbsp; {{ object.price1 }}</div>
+                    <div class="ui label"><i class="like icon"></i>Likes:&nbsp;&nbsp;&nbsp;{{ object.like }}</div>
+                    <div class="ui label"><i
+                            class="comment icon"></i>Comment:&nbsp;&nbsp;&nbsp;{{ object.comment.count }}
+                    </div>
+                    <div class="ui left floated primary button">
+                        <a id="like_house"> Like</a>
+                        <i class="right like icon"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="ui comments">
+        <h3 class="ui dividing header">Comments</h3>
+        {% if object.comment.count > 0 %}
+            {% for comment in object.comment.all %}
+                {% if not comment.is_reply %}
+                    <div class="comment">
+                        <a class="avatar">
+                            <img src="/media/{{ comment.member.profile_picture }}">
+                        </a>
+                        <div class="content">
+                            <a class="author">{{ comment.member.first_name }} {{ comment.member.last_name }}</a>
+                            <div class="metadata">
+                                <div class="date">{{ comment.date }}</div>
+                            </div>
+                            <div class="text">
+                                {{ comment.text }}
+                            </div>
+                            <div class="actions">
+                                <a class="reply" id="{{ comment.pk }}">Reply</a>
+                            </div>
+                        </div>
+                    </div>
+                    {% if comment.replies.count > 0 %}
+                        {% for reply in comment.replies.all %}
+                            <div class="comments">
+                                <div class="comment">
+                                    <a class="avatar">
+                                        <img src="/media/{{ reply.member.profile_picture }}">
+                                    </a>
+                                    <div class="content">
+                                        <a class="author" style="color: orangered">{{ reply.member.first_name }} {{ reply.member.last_name }}</a>
+                                           <a class="author" style="color: #0E566C"><br> {{ comment.member.first_name }} {{ comment.member.last_name }}@</a>
+                                        <div class="metadata">
+                                            <span class="date">{{ reply.date }}</span>
+                                        </div>
+                                        <div class="text">
+                                            {{ reply.text }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    </div>
+    <form id="second" class="ui form" action="" method="post">
+        {% csrf_token %}
+        <div class="field">
+            {{ form.as_p }}
+        </div>
+        {#            <div class="ui primary submit labeled icon button">#}
+        <button class="ui primary submit labeled icon button" type="submit">Add Comment</button>
+        {#            </div>#}
+    </form>
+    <div class="ui middle comments">
+        <form id="form" class="ui form" action="/reply/{{ home.pk }}/" method="post">
+            {% csrf_token %}
+            <div class="field">
+                {{ form.as_p }}
+            </div>
+            {#            <div class="ui primary submit labeled icon button">#}
+            <button id="reply_button" class="ui primary submit labeled icon button" type="submit">Reply</button>
+            {#            </div>#}
+        </form>
+    </div>
+    <div id="house_pk" style="visibility: hidden">{{ object.pk }}</div>
+{% endblock %}
