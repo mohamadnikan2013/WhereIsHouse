@@ -31,7 +31,6 @@ pbr==1.8.1
 pep8==1.5.7
 pilkit==1.1.13
 Pillow==3.2.0
-pkg-resources==0.0.0
 progressbar2==3.6.2
 pyflakes==0.8.1
 pygeoip==0.3.2
